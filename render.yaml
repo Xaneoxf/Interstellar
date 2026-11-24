@@ -1,5 +1,7 @@
 services:
   - type: web
     name: edu
-    env: docker
+    runtime: docker
     plan: free
+    repo: https://github.com/Xaneoxf/Interstellar
+    branch: main

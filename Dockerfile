@@ -3,9 +3,15 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY ["package.json", "./"]
+RUN npm install -g pnpm@10.33.0
 
-RUN npm install
+# Everything pnpm needs to resolve dependencies must exist before install:
+# package.json depends on tarballs in vendor/ and applies a patch from patches/.
+COPY package.json pnpm-lock.yaml ./
+COPY vendor ./vendor
+COPY patches ./patches
+
+RUN pnpm install
 
 COPY . .
 
